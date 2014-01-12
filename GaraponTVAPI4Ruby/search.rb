@@ -50,6 +50,9 @@ module GaraponTVAPI4Ruby
     def get_post_data(detail_flag = false)
       data = Hash.new
       if detail_flag
+        unless instance_variable_defined?(:@program_id)
+          raise 'Error: program_id not found'
+        end
         data[@column_mapping_list[:program_id]] = @program_id
         return data
       end
@@ -79,7 +82,9 @@ module GaraponTVAPI4Ruby
 
     attr_accessor :closed_caption_list
 
-    def initialize(program_id, start_date, duration, channel, title, description, favorite_flag, genre, channel_name, hash_tag, has_video, caption)
+    def initialize(
+        program_id, start_date, duration, channel, title, description, favorite_flag, genre, channel_name,
+            hash_tag, has_video, caption)
       @program_id          = program_id
       @start_date          = start_date
       @duration            = duration
@@ -110,7 +115,6 @@ module GaraponTVAPI4Ruby
 
     attr_accessor :hit_count
 
-
     def initialize(url, search_condition)
       @url              = url
       @search_condition = search_condition
@@ -126,7 +130,7 @@ module GaraponTVAPI4Ruby
         @search_condition.count_par_page = @search_condition.max_program_count
       end
       begin
-        program_list = _search_program_info(@search_condition)
+        program_list = search_program_info(@search_condition)
         program_list.each { |program|
           @counter += 1
           if @search_condition.with_detail_flag
@@ -134,7 +138,7 @@ module GaraponTVAPI4Ruby
             condition.program_id    = program.program_id
             condition.channel       = program.channel
             condition.search_target = 'c'
-            program_detail          = _search_program_info(condition, true)
+            program_detail          = search_program_info(condition, true)
             yield program_detail[0]
           else
             yield program
@@ -146,8 +150,8 @@ module GaraponTVAPI4Ruby
 
     alias each each_program_info
 
-    private
-    def _search_program_info(search_condition, detail_search_flag = false)
+    protected
+    def search_program_info(search_condition, detail_search_flag = false)
       response_string = @client.post_content(@url, search_condition.get_post_data(detail_search_flag))
       response        = JSON.parse(response_string)
       unless response.has_key?('status')
@@ -168,9 +172,9 @@ module GaraponTVAPI4Ruby
       result_list = []
       response['program'].each { |program|
         result_list.push(ProgramInfo.new(
-                             program['gtvid'], program['startdate'], program['duration'], program['ch'], program['title'],
-                             program['description'], program['favorite'], program['genre'], program['bc'],
-                             program['bc_tags'], program['ts'], program['caption']))
+                             program['gtvid'], program['startdate'], program['duration'], program['ch'],
+                             program['title'], program['description'], program['favorite'], program['genre'],
+                             program['bc'], program['bc_tags'], program['ts'], program['caption']))
       }
       result_list
     end

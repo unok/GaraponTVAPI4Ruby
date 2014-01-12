@@ -16,18 +16,18 @@ module GaraponTVAPI4Ruby
     attr_accessor :_channel_list
 
     def initialize(channel_array = [])
-      @_channel_list = []
+      @channel_list = []
       channel_array.each { |ch, val|
-        @_channel_list.push(Channel.new(ch, val['ch_name'], val['hash_tag']))
+        @channel_list.push(Channel.new(ch, val['ch_name'], val['hash_tag']))
       }
     end
 
     def get_channel_list
-      @_channel_list
+      @channel_list
     end
 
     def search_by_channel(ch)
-      _channel_list.each { |val|
+      channel_list.each { |val|
         if val.channel == ch
           return val
         end
@@ -36,7 +36,7 @@ module GaraponTVAPI4Ruby
     end
 
     def search_by_channel_name(name)
-      _channel_list.each { |val|
+      channel_list.each { |val|
         if val.channel_name == name
           return val
         end
