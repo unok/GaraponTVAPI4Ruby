@@ -105,6 +105,8 @@ module GaraponTVAPI4Ruby
     attr_reader :program_id
     # 番組開始時刻
     attr_reader :start_date
+    # 番組終了時刻
+    attr_reader :end_date
     # 番組時間
     attr_reader :duration
     # チャンネルID
@@ -130,10 +132,11 @@ module GaraponTVAPI4Ruby
     # 初期化
     def initialize(
         program_id, start_date, duration, channel, title, description, favorite_flag, genre, channel_name,
-            hash_tag, has_video, caption)
+            hash_tag, has_video, captions)
       @program_id          = program_id
-      @start_date          = start_date
+      @start_date          = DateTime.parse(start_date)
       @duration            = duration
+      @end_date            = ProgramInfo::duration_to_time(@start_date, duration)
       @channel             = channel
       @title               = title
       @description         = description
@@ -141,7 +144,12 @@ module GaraponTVAPI4Ruby
       @broadcast_station   = channel_name
       @hash_tag            = hash_tag
       @has_video           = has_video
-      @closed_caption_list = caption
+      @closed_caption_list = []
+      if captions != nil
+        captions.each { |caption|
+          @closed_caption_list.push(Caption.new(@start_date, caption['caption_time'], caption['caption_text']))
+        }
+      end
 
 
       @genre_list = []
@@ -150,7 +158,38 @@ module GaraponTVAPI4Ruby
         @genre_list.push(genre_item)
       }
     end
+
+    def self.duration_to_time(start_time, duration)
+      unless start_time.is_a?(DateTime)
+        raise 'start_time is not DateTime'
+      end
+      d = duration.split(':')
+      case d.size
+        when 3 then
+          return start_time + d[0].to_i * Rational(1, 24) + d[1].to_i * Rational(1, 24 * 60) + d[2].to_i * Rational(1, 24 * 60 * 60)
+        when 2 then
+          return start_time + d[0].to_i * Rational(1, 24) + d[1].to_i * Rational(1, 24 * 60)
+        when 1 then
+          return start_time + d[0].to_i * Rational(1, 24)
+        else
+          raise 'Error: unknown error'
+      end
+    end
+
   end
+
+  class Caption
+    attr_reader :start_timing
+    attr_reader :start_time
+    attr_reader :caption
+
+    def initialize(program_start_time, start_timing, caption)
+      @start_timing = start_timing
+      @caption      = caption
+      @start_time   = ProgramInfo.duration_to_time(program_start_time, start_timing)
+    end
+  end
+
 
   # 検索結果管理テーブル
   class SearchResult
@@ -175,7 +214,8 @@ module GaraponTVAPI4Ruby
     # each 時に使われる処理
     # 自動でページ送りと詳細情報取得処理を実施する
     def each_program_info
-      if @search_condition.max_program_count < @search_condition.count_par_page
+      if @search_condition.max_program_count != nil &&
+          @search_condition.max_program_count < @search_condition.count_par_page
         @search_condition.count_par_page = @search_condition.max_program_count
       end
       begin
@@ -194,21 +234,21 @@ module GaraponTVAPI4Ruby
           end
         }
         @search_condition.page_number += 1
-      end while @counter < @search_condition.max_program_count && @counter < @hit_count
+      end while ((@search_condition.max_program_count != nil && @counter < @search_condition.max_program_count ||@search_condition.max_program_count == nil) && @counter < @hit_count)
     end
 
     alias each each_program_info
-    
+
     # 結果件数取得
     def size
-      unless @hit_count >= 0
+      if @hit_count == 0
         search_program_info(@search_condition)
       end
       @hit_count
     end
 
     protected
-    
+
     # 実際の検索 API を呼ぶ処理
     def search_program_info(search_condition, detail_search_flag = false)
       response_string = @client.post_content(@url, search_condition.get_post_data(detail_search_flag))
@@ -227,7 +267,8 @@ module GaraponTVAPI4Ruby
       end
       unless detail_search_flag
         @hit_count = response['hit'].to_i
-        @version = response['version']
+        @version   = response['version']
+        @max_program_count = @hit_count
       end
       result_list = []
       response['program'].each { |program|

@@ -73,6 +73,8 @@
 
   <ul class="link-list">
     
+    <li ><a href="#method-c-duration_to_time">::duration_to_time</a>
+    
     <li ><a href="#method-c-new">::new</a>
     
   </ul>
@@ -97,6 +99,8 @@
   <ul class="link-list">
   
     <li><a href="../GaraponTVAPI4Ruby.html">GaraponTVAPI4Ruby</a>
+  
+    <li><a href="../GaraponTVAPI4Ruby/Caption.html">GaraponTVAPI4Ruby::Caption</a>
   
     <li><a href="../GaraponTVAPI4Ruby/Channel.html">GaraponTVAPI4Ruby::Channel</a>
   
@@ -210,6 +214,19 @@
         </div>
       </div>
       
+      <div id="attribute-i-end_date" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">end_date</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>番組終了時刻</p>
+        
+        </div>
+      </div>
+      
       <div id="attribute-i-favorite_flag" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">favorite_flag</span><span
@@ -310,11 +327,57 @@
       <h3 class="section-header">Public Class Methods</h3>
 
     
+      <div id="method-c-duration_to_time" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">duration_to_time</span><span
+            class="method-args">(start_time, duration)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="duration_to_time-source">
+            <pre><span class="ruby-comment"># File search.rb, line 162</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">duration_to_time</span>(<span class="ruby-identifier">start_time</span>, <span class="ruby-identifier">duration</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">start_time</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">DateTime</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;start_time is not DateTime&#39;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">d</span> = <span class="ruby-identifier">duration</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;:&#39;</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">size</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">3</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">start_time</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">*</span> <span class="ruby-constant">Rational</span>(<span class="ruby-value">1</span>, <span class="ruby-value">24</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">*</span> <span class="ruby-constant">Rational</span>(<span class="ruby-value">1</span>, <span class="ruby-value">24</span> <span class="ruby-operator">*</span> <span class="ruby-value">60</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">2</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">*</span> <span class="ruby-constant">Rational</span>(<span class="ruby-value">1</span>, <span class="ruby-value">24</span> <span class="ruby-operator">*</span> <span class="ruby-value">60</span> <span class="ruby-operator">*</span> <span class="ruby-value">60</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-value">2</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">start_time</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">*</span> <span class="ruby-constant">Rational</span>(<span class="ruby-value">1</span>, <span class="ruby-value">24</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">*</span> <span class="ruby-constant">Rational</span>(<span class="ruby-value">1</span>, <span class="ruby-value">24</span> <span class="ruby-operator">*</span> <span class="ruby-value">60</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-value">1</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">start_time</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">*</span> <span class="ruby-constant">Rational</span>(<span class="ruby-value">1</span>, <span class="ruby-value">24</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Error: unknown error&#39;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- duration_to_time-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- duration_to_time-method -->
+
+    
       <div id="method-c-new" class="method-detail ">
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">( program_id, start_date, duration, channel, title, description, favorite_flag, genre, channel_name, hash_tag, has_video, caption)</span>
+            class="method-args">( program_id, start_date, duration, channel, title, description, favorite_flag, genre, channel_name, hash_tag, has_video, captions)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -329,13 +392,14 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File search.rb, line 131</span>
+            <pre><span class="ruby-comment"># File search.rb, line 133</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(
     <span class="ruby-identifier">program_id</span>, <span class="ruby-identifier">start_date</span>, <span class="ruby-identifier">duration</span>, <span class="ruby-identifier">channel</span>, <span class="ruby-identifier">title</span>, <span class="ruby-identifier">description</span>, <span class="ruby-identifier">favorite_flag</span>, <span class="ruby-identifier">genre</span>, <span class="ruby-identifier">channel_name</span>,
-        <span class="ruby-identifier">hash_tag</span>, <span class="ruby-identifier">has_video</span>, <span class="ruby-identifier">caption</span>)
+        <span class="ruby-identifier">hash_tag</span>, <span class="ruby-identifier">has_video</span>, <span class="ruby-identifier">captions</span>)
   <span class="ruby-ivar">@program_id</span>          = <span class="ruby-identifier">program_id</span>
-  <span class="ruby-ivar">@start_date</span>          = <span class="ruby-identifier">start_date</span>
+  <span class="ruby-ivar">@start_date</span>          = <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">start_date</span>)
   <span class="ruby-ivar">@duration</span>            = <span class="ruby-identifier">duration</span>
+  <span class="ruby-ivar">@end_date</span>            = <span class="ruby-constant">ProgramInfo</span><span class="ruby-operator">::</span><span class="ruby-identifier">duration_to_time</span>(<span class="ruby-ivar">@start_date</span>, <span class="ruby-identifier">duration</span>)
   <span class="ruby-ivar">@channel</span>             = <span class="ruby-identifier">channel</span>
   <span class="ruby-ivar">@title</span>               = <span class="ruby-identifier">title</span>
   <span class="ruby-ivar">@description</span>         = <span class="ruby-identifier">description</span>
@@ -343,7 +407,12 @@
   <span class="ruby-ivar">@broadcast_station</span>   = <span class="ruby-identifier">channel_name</span>
   <span class="ruby-ivar">@hash_tag</span>            = <span class="ruby-identifier">hash_tag</span>
   <span class="ruby-ivar">@has_video</span>           = <span class="ruby-identifier">has_video</span>
-  <span class="ruby-ivar">@closed_caption_list</span> = <span class="ruby-identifier">caption</span>
+  <span class="ruby-ivar">@closed_caption_list</span> = []
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">captions</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>
+    <span class="ruby-identifier">captions</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">caption</span><span class="ruby-operator">|</span>
+      <span class="ruby-ivar">@closed_caption_list</span>.<span class="ruby-identifier">push</span>(<span class="ruby-constant">Caption</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@start_date</span>, <span class="ruby-identifier">caption</span>[<span class="ruby-string">&#39;caption_time&#39;</span>], <span class="ruby-identifier">caption</span>[<span class="ruby-string">&#39;caption_text&#39;</span>]))
+    }
+  <span class="ruby-keyword">end</span>
 
 
   <span class="ruby-ivar">@genre_list</span> = []

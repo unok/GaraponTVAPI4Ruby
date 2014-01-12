@@ -4,7 +4,7 @@
 <head>
 <meta content="text/html; charset=UTF8" http-equiv="Content-Type">
 
-<title>class GaraponTVAPI4Ruby::Setting - RDoc Documentation</title>
+<title>class GaraponTVAPI4Ruby::Caption - RDoc Documentation</title>
 
 <link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
 
@@ -49,7 +49,7 @@
     <nav id="file-list-section" class="section">
   <h3 class="section-header">Defined In</h3>
   <ul>
-    <li>setting.rb
+    <li>search.rb
   </ul>
 </nav>
 
@@ -123,12 +123,10 @@
 </nav>
 
 <div id="documentation">
-  <h1 class="class">class GaraponTVAPI4Ruby::Setting</h1>
+  <h1 class="class">class GaraponTVAPI4Ruby::Caption</h1>
 
   <div id="description" class="description">
     
-<p>Garapon Web への接続情報を管理するクラス</p>
-
   </div><!-- description -->
 
   
@@ -147,41 +145,41 @@
       <h3 class="section-header">Attributes</h3>
 
       
-      <div id="attribute-i-developer_id" class="method-detail">
+      <div id="attribute-i-caption" class="method-detail">
         <div class="method-heading attribute-method-heading">
-          <span class="method-name">developer_id</span><span
-            class="attribute-access-type">[RW]</span>
+          <span class="method-name">caption</span><span
+            class="attribute-access-type">[R]</span>
         </div>
 
         <div class="method-description">
         
-        <p>API を利用するための Garapon TV から付与された開発者ID</p>
+        
         
         </div>
       </div>
       
-      <div id="attribute-i-password" class="method-detail">
+      <div id="attribute-i-start_time" class="method-detail">
         <div class="method-heading attribute-method-heading">
-          <span class="method-name">password</span><span
-            class="attribute-access-type">[RW]</span>
+          <span class="method-name">start_time</span><span
+            class="attribute-access-type">[R]</span>
         </div>
 
         <div class="method-description">
         
-        <p>ログインするためのパスワードの md5sum</p>
+        
         
         </div>
       </div>
       
-      <div id="attribute-i-user_id" class="method-detail">
+      <div id="attribute-i-start_timing" class="method-detail">
         <div class="method-heading attribute-method-heading">
-          <span class="method-name">user_id</span><span
-            class="attribute-access-type">[RW]</span>
+          <span class="method-name">start_timing</span><span
+            class="attribute-access-type">[R]</span>
         </div>
 
         <div class="method-description">
         
-        <p>ログインするための ID</p>
+        
         
         </div>
       </div>
@@ -199,7 +197,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(ini_path = 'developer_info.json')</span>
+            class="method-args">(program_start_time, start_timing, caption)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -208,26 +206,17 @@
 
         <div class="method-description">
           
-          <p>データを developer_info.json から読み込む 書式は developer_info.json.sample を参照してください</p>
+          
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File setting.rb, line 15</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">ini_path</span> = <span class="ruby-string">&#39;developer_info.json&#39;</span>)
-  <span class="ruby-ivar">@data_field_list</span> = <span class="ruby-node">%wuser_id password developer_id/</span>
-  <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">ini_path</span>)
-    <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;File not found: &#39;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">ini_path</span>
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">json</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">readlines</span>(<span class="ruby-identifier">ini_path</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;&#39;</span>)
-  <span class="ruby-identifier">data</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">json</span>)
-  <span class="ruby-ivar">@data_field_list</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
-    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>)
-      <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Not found #{key}&quot;</span>
-    <span class="ruby-keyword">end</span>
-    <span class="ruby-identifier">eval</span> <span class="ruby-node">&quot;@#{key} = data[key]&quot;</span>
-  }
+            <pre><span class="ruby-comment"># File search.rb, line 186</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">program_start_time</span>, <span class="ruby-identifier">start_timing</span>, <span class="ruby-identifier">caption</span>)
+  <span class="ruby-ivar">@start_timing</span> = <span class="ruby-identifier">start_timing</span>
+  <span class="ruby-ivar">@caption</span>      = <span class="ruby-identifier">caption</span>
+  <span class="ruby-ivar">@start_time</span>   = <span class="ruby-constant">ProgramInfo</span>.<span class="ruby-identifier">duration_to_time</span>(<span class="ruby-identifier">program_start_time</span>, <span class="ruby-identifier">start_timing</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- new-source -->
           

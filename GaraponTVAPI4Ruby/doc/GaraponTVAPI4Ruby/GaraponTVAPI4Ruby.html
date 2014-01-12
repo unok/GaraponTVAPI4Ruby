@@ -110,6 +110,8 @@
   
     <li><a href="../GaraponTVAPI4Ruby.html">GaraponTVAPI4Ruby</a>
   
+    <li><a href="../GaraponTVAPI4Ruby/Caption.html">GaraponTVAPI4Ruby::Caption</a>
+  
     <li><a href="../GaraponTVAPI4Ruby/Channel.html">GaraponTVAPI4Ruby::Channel</a>
   
     <li><a href="../GaraponTVAPI4Ruby/ChannelList.html">GaraponTVAPI4Ruby::ChannelList</a>
@@ -262,7 +264,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">()</span>
+            class="method-args">(developer_info = './developer_info.json')</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -278,8 +280,8 @@
           
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File api.rb, line 39</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
-  <span class="ruby-ivar">@setting</span> = <span class="ruby-constant">Setting</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">developer_info</span> = <span class="ruby-string">&#39;./developer_info.json&#39;</span>)
+  <span class="ruby-ivar">@setting</span> = <span class="ruby-constant">Setting</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">developer_info</span>)
   <span class="ruby-identifier">get_connection_info</span>
   <span class="ruby-identifier">get_channel_list</span>
 <span class="ruby-keyword">end</span></pre>

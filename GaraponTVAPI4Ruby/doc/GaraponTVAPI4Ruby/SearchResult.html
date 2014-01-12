@@ -118,6 +118,8 @@
   
     <li><a href="../GaraponTVAPI4Ruby.html">GaraponTVAPI4Ruby</a>
   
+    <li><a href="../GaraponTVAPI4Ruby/Caption.html">GaraponTVAPI4Ruby::Caption</a>
+  
     <li><a href="../GaraponTVAPI4Ruby/Channel.html">GaraponTVAPI4Ruby::Channel</a>
   
     <li><a href="../GaraponTVAPI4Ruby/ChannelList.html">GaraponTVAPI4Ruby::ChannelList</a>
@@ -219,7 +221,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File search.rb, line 165</span>
+            <pre><span class="ruby-comment"># File search.rb, line 204</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">search_condition</span>)
   <span class="ruby-ivar">@url</span>              = <span class="ruby-identifier">url</span>
   <span class="ruby-ivar">@search_condition</span> = <span class="ruby-identifier">search_condition</span>
@@ -292,9 +294,10 @@
 
           
           <div class="method-source-code" id="each_program_info-source">
-            <pre><span class="ruby-comment"># File search.rb, line 177</span>
+            <pre><span class="ruby-comment"># File search.rb, line 216</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">each_program_info</span>
-  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@search_condition</span>.<span class="ruby-identifier">max_program_count</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@search_condition</span>.<span class="ruby-identifier">count_par_page</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@search_condition</span>.<span class="ruby-identifier">max_program_count</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span>
+      <span class="ruby-ivar">@search_condition</span>.<span class="ruby-identifier">max_program_count</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@search_condition</span>.<span class="ruby-identifier">count_par_page</span>
     <span class="ruby-ivar">@search_condition</span>.<span class="ruby-identifier">count_par_page</span> = <span class="ruby-ivar">@search_condition</span>.<span class="ruby-identifier">max_program_count</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">begin</span>
@@ -313,7 +316,7 @@
       <span class="ruby-keyword">end</span>
     }
     <span class="ruby-ivar">@search_condition</span>.<span class="ruby-identifier">page_number</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
-  <span class="ruby-keyword">end</span> <span class="ruby-keyword">while</span> <span class="ruby-ivar">@counter</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@search_condition</span>.<span class="ruby-identifier">max_program_count</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@counter</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@hit_count</span>
+  <span class="ruby-keyword">end</span> <span class="ruby-keyword">while</span> ((<span class="ruby-ivar">@search_condition</span>.<span class="ruby-identifier">max_program_count</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@counter</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@search_condition</span>.<span class="ruby-identifier">max_program_count</span> <span class="ruby-operator">||</span><span class="ruby-ivar">@search_condition</span>.<span class="ruby-identifier">max_program_count</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@counter</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@hit_count</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- each_program_info-source -->
           
@@ -348,9 +351,9 @@
 
           
           <div class="method-source-code" id="size-source">
-            <pre><span class="ruby-comment"># File search.rb, line 203</span>
+            <pre><span class="ruby-comment"># File search.rb, line 243</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">size</span>
-  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@hit_count</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-value">0</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@hit_count</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
     <span class="ruby-identifier">search_program_info</span>(<span class="ruby-ivar">@search_condition</span>)
   <span class="ruby-keyword">end</span>
   <span class="ruby-ivar">@hit_count</span>
@@ -390,7 +393,7 @@
 
           
           <div class="method-source-code" id="search_program_info-source">
-            <pre><span class="ruby-comment"># File search.rb, line 213</span>
+            <pre><span class="ruby-comment"># File search.rb, line 253</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">search_program_info</span>(<span class="ruby-identifier">search_condition</span>, <span class="ruby-identifier">detail_search_flag</span> = <span class="ruby-keyword">false</span>)
   <span class="ruby-identifier">response_string</span> = <span class="ruby-ivar">@client</span>.<span class="ruby-identifier">post_content</span>(<span class="ruby-ivar">@url</span>, <span class="ruby-identifier">search_condition</span>.<span class="ruby-identifier">get_post_data</span>(<span class="ruby-identifier">detail_search_flag</span>))
   <span class="ruby-identifier">response</span>        = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response_string</span>)
@@ -408,7 +411,8 @@
   <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">unless</span> <span class="ruby-identifier">detail_search_flag</span>
     <span class="ruby-ivar">@hit_count</span> = <span class="ruby-identifier">response</span>[<span class="ruby-string">&#39;hit&#39;</span>].<span class="ruby-identifier">to_i</span>
-    <span class="ruby-ivar">@version</span> = <span class="ruby-identifier">response</span>[<span class="ruby-string">&#39;version&#39;</span>]
+    <span class="ruby-ivar">@version</span>   = <span class="ruby-identifier">response</span>[<span class="ruby-string">&#39;version&#39;</span>]
+    <span class="ruby-ivar">@max_program_count</span> = <span class="ruby-ivar">@hit_count</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">result_list</span> = []
   <span class="ruby-identifier">response</span>[<span class="ruby-string">&#39;program&#39;</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">program</span><span class="ruby-operator">|</span>
