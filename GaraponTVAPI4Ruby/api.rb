@@ -36,8 +36,8 @@ module GaraponTVAPI4Ruby
     
     # 初期化
     # 接続情報と録画チャンネルリストを取得
-    def initialize
-      @setting = Setting.new
+    def initialize(developer_info = './developer_info.json')
+      @setting = Setting.new(developer_info)
       get_connection_info
       get_channel_list
     end

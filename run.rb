@@ -2,7 +2,7 @@
 
 require './GaraponTVAPI4Ruby/api.rb'
 
-s = GaraponTVAPI4Ruby::GaraponTVAPI4Ruby.new
+s = GaraponTVAPI4Ruby::GaraponTVAPI4Ruby.new('./developer_info.json')
 
 condition = GaraponTVAPI4Ruby::SearchCondition.new
 condition.search_key = 'あまちゃん'
@@ -13,3 +13,6 @@ s.search(condition).each {|program|
 }
 
 p s.get_channel_list
+
+p s.setting
+p s.connection_info
