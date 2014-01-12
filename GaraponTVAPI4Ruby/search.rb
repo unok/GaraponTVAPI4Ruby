@@ -1,26 +1,57 @@
 module GaraponTVAPI4Ruby
+=begin rdoc
+検索条件管理クラス
 
+例:
+  d = SearchCondition.new
+
+  d.search_key    = 'あまちゃん'
+  d.search_target = 'c'
+  d.start_date    = '2013-12-30 00:00:00'
+  d.end_date      = '2013-12-31 23:59:59'
+
+=end
   class SearchCondition
+    # API検索時の 1 ページ毎の件数(default 100, max 100)
+    # @max_program_count の方が小さい場合は @max_program_count の価が使われる
     attr_accessor :count_par_page
+    # API検索時のページ番号
     attr_accessor :page_number
+    # 検索対象 (e: EPG, c: 字幕)
     attr_accessor :search_target
+    # 検索する文字
     attr_accessor :search_key
+    # 検索する番組ID
     attr_accessor :program_id
+    # 検索する番組ID のリスト
     attr_accessor :program_id_list
+    # 検索する大ジャンルID
     attr_accessor :genre0
+    # 検索する小ジャンルID
     attr_accessor :genre1
+    # 検索するチャンネルのID
     attr_accessor :channel
+    # 時間範囲の hit 判定(s: 開始時間が含まれる, e: 終了時間が含まれる)
     attr_accessor :duration_target
+    # 検索する時間帯の開始時刻 YYYY-MM-DD hh:mm:ss
     attr_accessor :start_date
+    # 検索する時間帯の終了時刻 YYYY-MM-DD hh:mm:ss
     attr_accessor :end_date
+    # お気に入りを取得する (all のみ)
     attr_accessor :rank
+    # ソート順(std:開始時刻の降順, sta: 開始時間の昇順)
     attr_accessor :sort_condition
-    attr_accessor :video_only_flag
+    # ビデオがあるものを取得する EPG 検索時のみ有効 (all のみ)
+    attr_accessor :has_video_flag
 
+    # caption 全部取得する(個別検索が自動で実施される)
     attr_accessor :with_detail_flag
-    attr_accessor :column_mapping_list
+
+    # 最大結果取得件数
     attr_accessor :max_program_count
 
+    # 初期化処理
+    # 初期値と API とのキーマッピングを設定する
     def initialize
       @column_mapping_list = {
           :count_par_page  => 'n',
@@ -37,7 +68,7 @@ module GaraponTVAPI4Ruby
           :end_date        => 'edate',
           :rank            => 'rank',
           :sort_condition  => 'sort',
-          :video_only_flag => 'video'
+          :has_video_flag  => 'video'
       }
       @count_par_page      = 100
       @max_program_count   = nil
@@ -47,6 +78,7 @@ module GaraponTVAPI4Ruby
       @search_target       = 'e'
     end
 
+    # HTTPClient の post_data 時の post に使う価を取得する
     def get_post_data(detail_flag = false)
       data = Hash.new
       if detail_flag
@@ -67,21 +99,35 @@ module GaraponTVAPI4Ruby
     end
   end
 
+  # 番組情報
   class ProgramInfo
-    attr_accessor :program_id
-    attr_accessor :start_date
-    attr_accessor :duration
-    attr_accessor :channel
-    attr_accessor :title
-    attr_accessor :description
-    attr_accessor :favorite_flag
-    attr_accessor :genre_list
-    attr_accessor :channel_name
-    attr_accessor :hash_tag
-    attr_accessor :has_video
+    # 番組ID
+    attr_reader :program_id
+    # 番組開始時刻
+    attr_reader :start_date
+    # 番組時間
+    attr_reader :duration
+    # チャンネルID
+    attr_reader :channel
+    # 放送局名
+    attr_reader :broadcast_station
+    # 番組名
+    attr_reader :title
+    # 詳細 
+    attr_reader :description
+    # お気に入り
+    attr_reader :favorite_flag
+    # 所属ジャンル
+    attr_reader :genre_list
+    # twitter ハッシュタグ
+    attr_reader :hash_tag
+    # ビデオがあるかどうか
+    attr_reader :has_video
 
-    attr_accessor :closed_caption_list
+    # 字幕情報
+    attr_reader :closed_caption_list
 
+    # 初期化
     def initialize(
         program_id, start_date, duration, channel, title, description, favorite_flag, genre, channel_name,
             hash_tag, has_video, caption)
@@ -92,7 +138,7 @@ module GaraponTVAPI4Ruby
       @title               = title
       @description         = description
       @favorite_flag       = favorite_flag
-      @channel_name        = channel_name
+      @broadcast_station   = channel_name
       @hash_tag            = hash_tag
       @has_video           = has_video
       @closed_caption_list = caption
@@ -106,15 +152,16 @@ module GaraponTVAPI4Ruby
     end
   end
 
+  # 検索結果管理テーブル
   class SearchResult
     include Enumerable
 
-    attr_accessor :status
-    attr_accessor :count
+    # 結果の端末のソフトウェアバージョン
     attr_accessor :version
-
+    # 検索結果の件数
     attr_accessor :hit_count
 
+    # 初期化
     def initialize(url, search_condition)
       @url              = url
       @search_condition = search_condition
@@ -125,6 +172,8 @@ module GaraponTVAPI4Ruby
       @client.receive_timeout = 3000
     end
 
+    # each 時に使われる処理
+    # 自動でページ送りと詳細情報取得処理を実施する
     def each_program_info
       if @search_condition.max_program_count < @search_condition.count_par_page
         @search_condition.count_par_page = @search_condition.max_program_count
@@ -149,8 +198,18 @@ module GaraponTVAPI4Ruby
     end
 
     alias each each_program_info
+    
+    # 結果件数取得
+    def size
+      unless @hit_count >= 0
+        search_program_info(@search_condition)
+      end
+      @hit_count
+    end
 
     protected
+    
+    # 実際の検索 API を呼ぶ処理
     def search_program_info(search_condition, detail_search_flag = false)
       response_string = @client.post_content(@url, search_condition.get_post_data(detail_search_flag))
       response        = JSON.parse(response_string)
@@ -168,6 +227,7 @@ module GaraponTVAPI4Ruby
       end
       unless detail_search_flag
         @hit_count = response['hit'].to_i
+        @version = response['version']
       end
       result_list = []
       response['program'].each { |program|

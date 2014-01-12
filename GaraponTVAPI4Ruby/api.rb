@@ -11,6 +11,7 @@ require 'search.rb'
 
 module GaraponTVAPI4Ruby
 
+  # GaraponTV API ラッパークラス
   class GaraponTVAPI4Ruby
     GARAPON_WEB_AUTH_URL = 'http://garagw.garapon.info/getgtvaddress'
 
@@ -24,18 +25,26 @@ module GaraponTVAPI4Ruby
     API_URL_TYPE_FAVORITE = 'favorite'
     API_URL_TYPE_CHANNEL  = 'channel'
 
-    attr_accessor :setting
-    attr_accessor :connection_info
-    attr_accessor :session
-    attr_accessor :channel_list
+    # 設定情報
+    attr_reader :setting
+    # 接続情報
+    attr_reader :connection_info
+    # セッション情報
+    attr_reader :session
 
     public
+    
+    # 初期化
+    # 接続情報と録画チャンネルリストを取得
     def initialize
       @setting = Setting.new
       get_connection_info
       get_channel_list
     end
 
+    # ガラポン端末への接続情報を取得
+    # [return]
+    # ConnectionInfo
     def get_connection_info
       unless @connection_info.nil?
         return @connection_info
@@ -51,6 +60,13 @@ module GaraponTVAPI4Ruby
       @connection_info = ConnectionInfo.new(response)
     end
 
+    # ログイン処理
+    # ログインAPIを実行してセッション情報を取得する
+    # [arg1]
+    # Boolean
+    # retry_flag true の時にセッションが存在しても再度接続する
+    # [return]
+    # true
     def do_login(retry_flag = false)
       unless retry_flag == false && @session == nil
         return true
@@ -76,6 +92,10 @@ module GaraponTVAPI4Ruby
       true
     end
 
+    
+    # 録画チャンネル一覧を取得する
+    # [return]
+    # ChannelList
     def get_channel_list
       if @channel_list != nil
         return @channel_list
@@ -96,12 +116,23 @@ module GaraponTVAPI4Ruby
     end
 
 
+    # 検索
+    # [arg1]
+    # SearchCondition
+    # [return]
+    # SearchResult
     def search(search_condition)
       do_login
       SearchResult.new(get_api_url(API_URL_TYPE_SEARCH), search_condition)
     end
 
     protected
+    
+    # 各API用のURLを取得
+    # [arg1]
+    # url_type API_URL_TYPE_*
+    # [return]
+    # url 文字列
     def get_api_url(url_type)
       con = get_connection_info
 
@@ -122,12 +153,15 @@ module GaraponTVAPI4Ruby
       end
     end
 
+    # セッション取得
+    # セッションが存在しなければログインする
+    # [return]
+    # セッションID
     def get_session
       if @session == nil
         do_login
       end
       @session
     end
-
   end
 end

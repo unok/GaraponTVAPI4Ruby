@@ -1,10 +1,11 @@
 module GaraponTVAPI4Ruby
-
+  # チャンネル情報管理クラス
   class Channel
-    attr_accessor :channel
-    attr_accessor :channel_name
-    attr_accessor :hash_tag
+    attr_reader :channel
+    attr_reader :channel_name
+    attr_reader :hash_tag
 
+    # 初期化処理
     def initialize (ch, ch_name, hash_tag)
       @channel      = ch
       @channel_name = ch_name
@@ -12,9 +13,10 @@ module GaraponTVAPI4Ruby
     end
   end
 
+  # チャンネル情報リスト管理クラス
   class ChannelList
-    attr_accessor :_channel_list
 
+    # 初期化処理
     def initialize(channel_array = [])
       @channel_list = []
       channel_array.each { |ch, val|
@@ -22,10 +24,12 @@ module GaraponTVAPI4Ruby
       }
     end
 
+    # チャンネル情報のリストを返す
     def get_channel_list
       @channel_list
     end
 
+    # チャンネルID で検索
     def search_by_channel(ch)
       channel_list.each { |val|
         if val.channel == ch
@@ -35,6 +39,7 @@ module GaraponTVAPI4Ruby
       nil
     end
 
+    # チャンネル名で検索
     def search_by_channel_name(name)
       channel_list.each { |val|
         if val.channel_name == name

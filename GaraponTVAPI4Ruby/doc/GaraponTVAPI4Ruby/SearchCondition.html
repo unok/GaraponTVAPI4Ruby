@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF8" http-equiv="Content-Type">
+
+<title>class GaraponTVAPI4Ruby::SearchCondition - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>search.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-get_post_data">#get_post_data</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../doc/created_rid.html">created.rid</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../GaraponTVAPI4Ruby.html">GaraponTVAPI4Ruby</a>
+  
+    <li><a href="../GaraponTVAPI4Ruby/Channel.html">GaraponTVAPI4Ruby::Channel</a>
+  
+    <li><a href="../GaraponTVAPI4Ruby/ChannelList.html">GaraponTVAPI4Ruby::ChannelList</a>
+  
+    <li><a href="../GaraponTVAPI4Ruby/ConnectionInfo.html">GaraponTVAPI4Ruby::ConnectionInfo</a>
+  
+    <li><a href="../GaraponTVAPI4Ruby/GaraponTVAPI4Ruby.html">GaraponTVAPI4Ruby::GaraponTVAPI4Ruby</a>
+  
+    <li><a href="../GaraponTVAPI4Ruby/ProgramInfo.html">GaraponTVAPI4Ruby::ProgramInfo</a>
+  
+    <li><a href="../GaraponTVAPI4Ruby/SearchCondition.html">GaraponTVAPI4Ruby::SearchCondition</a>
+  
+    <li><a href="../GaraponTVAPI4Ruby/SearchResult.html">GaraponTVAPI4Ruby::SearchResult</a>
+  
+    <li><a href="../GaraponTVAPI4Ruby/Setting.html">GaraponTVAPI4Ruby::Setting</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class GaraponTVAPI4Ruby::SearchCondition</h1>
+
+  <div id="description" class="description">
+    
+<p>検索条件管理クラス</p>
+
+<p>例:</p>
+
+<pre>d = SearchCondition.new
+
+d.search_key    = &#39;あまちゃん&#39;
+d.search_target = &#39;c&#39;
+d.start_date    = &#39;2013-12-30 00:00:00&#39;
+d.end_date      = &#39;2013-12-31 23:59:59&#39;</pre>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-channel" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">channel</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>検索するチャンネルのID</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-count_par_page" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">count_par_page</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>API検索時の 1 ページ毎の件数(default 100, max 100) @max_program_count の方が小さい場合は
+@max_program_count の価が使われる</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-duration_target" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">duration_target</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>時間範囲の hit 判定(s: 開始時間が含まれる, e: 終了時間が含まれる)</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-end_date" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">end_date</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>検索する時間帯の終了時刻 YYYY-MM-DD hh:mm:ss</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-genre0" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">genre0</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>検索する大ジャンルID</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-genre1" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">genre1</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>検索する小ジャンルID</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-has_video_flag" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">has_video_flag</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>ビデオがあるものを取得する EPG 検索時のみ有効 (all のみ)</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-max_program_count" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">max_program_count</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>最大結果取得件数</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-page_number" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">page_number</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>API検索時のページ番号</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-program_id" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">program_id</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>検索する番組ID</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-program_id_list" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">program_id_list</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>検索する番組ID のリスト</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-rank" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">rank</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>お気に入りを取得する (all のみ)</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-search_key" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">search_key</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>検索する文字</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-search_target" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">search_target</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>検索対象 (e: EPG, c: 字幕)</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-sort_condition" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">sort_condition</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>ソート順(std:開始時刻の降順, sta: 開始時間の昇順)</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-start_date" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">start_date</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>検索する時間帯の開始時刻 YYYY-MM-DD hh:mm:ss</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-with_detail_flag" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">with_detail_flag</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>caption 全部取得する(個別検索が自動で実施される)</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>初期化処理 初期値と API とのキーマッピングを設定する</p>
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File search.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+  <span class="ruby-ivar">@column_mapping_list</span> = {
+      <span class="ruby-value">:count_par_page</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;n&#39;</span>,
+      <span class="ruby-value">:page_number</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;p&#39;</span>,
+      <span class="ruby-value">:search_target</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;s&#39;</span>,
+      <span class="ruby-value">:search_key</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;key&#39;</span>,
+      <span class="ruby-value">:program_id</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;gtvid&#39;</span>,
+      <span class="ruby-value">:program_id_list</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;gtvidlist&#39;</span>,
+      <span class="ruby-value">:genre0</span>          =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;genre0&#39;</span>,
+      <span class="ruby-value">:genre1</span>          =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;genre1&#39;</span>,
+      <span class="ruby-value">:channel</span>         =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;ch&#39;</span>,
+      <span class="ruby-value">:duration_target</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;dt&#39;</span>,
+      <span class="ruby-value">:start_date</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;sdate&#39;</span>,
+      <span class="ruby-value">:end_date</span>        =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;edate&#39;</span>,
+      <span class="ruby-value">:rank</span>            =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;rank&#39;</span>,
+      <span class="ruby-value">:sort_condition</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;sort&#39;</span>,
+      <span class="ruby-value">:has_video_flag</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;video&#39;</span>
+  }
+  <span class="ruby-ivar">@count_par_page</span>      = <span class="ruby-value">100</span>
+  <span class="ruby-ivar">@max_program_count</span>   = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@page_number</span>         = <span class="ruby-value">1</span>
+  <span class="ruby-ivar">@duration_target</span>     = <span class="ruby-string">&#39;s&#39;</span>
+  <span class="ruby-ivar">@sort_condition</span>      = <span class="ruby-string">&#39;std&#39;</span>
+  <span class="ruby-ivar">@search_target</span>       = <span class="ruby-string">&#39;e&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-get_post_data" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_post_data</span><span
+            class="method-args">(detail_flag = false)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>HTTPClient の post_data 時の post に使う価を取得する</p>
+          
+          
+
+          
+          <div class="method-source-code" id="get_post_data-source">
+            <pre><span class="ruby-comment"># File search.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_post_data</span>(<span class="ruby-identifier">detail_flag</span> = <span class="ruby-keyword">false</span>)
+  <span class="ruby-identifier">data</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">detail_flag</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">instance_variable_defined?</span>(<span class="ruby-value">:@program_id</span>)
+      <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Error: program_id not found&#39;</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">data</span>[<span class="ruby-ivar">@column_mapping_list</span>[<span class="ruby-value">:program_id</span>]] = <span class="ruby-ivar">@program_id</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">data</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">instance_variables</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">var</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">var</span> <span class="ruby-operator">==</span> <span class="ruby-value">:@column_mapping_list</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">var</span> <span class="ruby-operator">==</span> <span class="ruby-value">:@with_detail_flag</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">var</span> <span class="ruby-operator">==</span> <span class="ruby-value">:max_program_count</span>
+      <span class="ruby-keyword">next</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">val</span> = <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-identifier">var</span>)
+    <span class="ruby-identifier">eval</span>(<span class="ruby-node">&quot;data[@column_mapping_list[:#{var.to_s.tr(&#39;@&#39;, &#39;&#39;)}]] = val&quot;</span>)
+  }
+  <span class="ruby-identifier">data</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_post_data-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_post_data-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

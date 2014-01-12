@@ -1,13 +1,16 @@
 module GaraponTVAPI4Ruby
 
+  # 接続情報管理クラス
   class ConnectionInfo
-    attr_accessor :ip
-    attr_accessor :global_ip
-    attr_accessor :private_ip
-    attr_accessor :port
-    attr_accessor :ts_port
-    attr_accessor :version
+    attr_reader :ip
+    attr_reader :global_ip
+    attr_reader :private_ip
+    attr_reader :port
+    attr_reader :ts_port
+    attr_reader :version
 
+    # 初期化処理
+    # 接続情報から情報を取得
     def initialize(string)
       string.each_line { |line|
         key, val = line.chomp.split(';')
