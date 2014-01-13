@@ -6,6 +6,7 @@ module GaraponTVAPI4Ruby
     attr_reader :global_ip
     attr_reader :private_ip
     attr_reader :port
+    attr_reader :global_port
     attr_reader :ts_port
     attr_reader :version
 
@@ -25,6 +26,7 @@ module GaraponTVAPI4Ruby
             @private_ip = val
           when 'port' then
             @port = val
+            @global_port = val
           when 'port2' then
             @ts_port = val
           when 'gtvver' then
@@ -35,6 +37,9 @@ module GaraponTVAPI4Ruby
             raise "WARNING: unknown response: #{key}  = #{val}"
         end
       }
+      if @ip == @private_ip
+        @port = 80
+      end
     end
   end
 end

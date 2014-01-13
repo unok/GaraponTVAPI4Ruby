@@ -160,6 +160,19 @@
         </div>
       </div>
       
+      <div id="attribute-i-global_port" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">global_port</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
       <div id="attribute-i-ip" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">ip</span><span
@@ -253,7 +266,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File connection_info.rb, line 14</span>
+            <pre><span class="ruby-comment"># File connection_info.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">string</span>)
   <span class="ruby-identifier">string</span>.<span class="ruby-identifier">each_line</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;;&#39;</span>)
@@ -268,6 +281,7 @@
         <span class="ruby-ivar">@private_ip</span> = <span class="ruby-identifier">val</span>
       <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;port&#39;</span> <span class="ruby-keyword">then</span>
         <span class="ruby-ivar">@port</span> = <span class="ruby-identifier">val</span>
+        <span class="ruby-ivar">@global_port</span> = <span class="ruby-identifier">val</span>
       <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;port2&#39;</span> <span class="ruby-keyword">then</span>
         <span class="ruby-ivar">@ts_port</span> = <span class="ruby-identifier">val</span>
       <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;gtvver&#39;</span> <span class="ruby-keyword">then</span>
@@ -278,6 +292,9 @@
         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;WARNING: unknown response: #{key}  = #{val}&quot;</span>
     <span class="ruby-keyword">end</span>
   }
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@ip</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@private_ip</span>
+    <span class="ruby-ivar">@port</span> = <span class="ruby-value">80</span>
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- new-source -->
           
